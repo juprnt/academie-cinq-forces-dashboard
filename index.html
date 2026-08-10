@@ -1,0 +1,553 @@
+<!doctype html>
+  <html lang="fr">
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>L'Académie des Cinq Forces — Tableau de bord</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+  :root{
+    --bg:#F7EFE0;
+    --bg-soft:#F1E6D0;
+    --card:#FFFBF3;
+    --card-line:#E6D7B8;
+    --ink:#3B2E22;
+  --ink-soft:#7A6A56;
+  --gold:#B9862E;
+      --gold-deep:#96691F;
+  --burgundy:#8C3B3B;
+  --shadow:0 6px 18px rgba(88,62,26,0.10);
+  --radius:16px;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+    background:radial-gradient(circle at 15% 0%, #FBF3E3 0%, var(--bg) 55%, var(--bg-soft) 100%);
+    color:var(--ink);
+  font-family:'Inter',system-ui,-apple-system,sans-serif;
+  line-height:1.55;
+}
+h1,h2,h3,h4{font-family:'Fraunces',Georgia,serif; margin:0 0 .3em; font-weight:600; letter-spacing:.01em;}
+p{margin:0 0 .8em;}
+a{color:var(--gold-deep);}
+.app{max-width:1180px; margin:0 auto; padding:0 24px 80px;}
+/* ---------- Header ---------- */
+header.top{
+position:sticky; top:0; z-index:20;
+background:rgba(247,239,224,0.92);
+backdrop-filter:blur(6px);
+border-bottom:1px solid var(--card-line);
+padding:14px 24px;
+display:flex; align-items:center; justify-content:space-between; gap:16px;
+flex-wrap:wrap;
+}
+.brand{display:flex; align-items:center; gap:10px;}
+.brand .crest{
+width:38px; height:38px; border-radius:50%;
+background:conic-gradient(from 0deg,#4A7C96,#7A6A42,#84879C,#B5502E,#B5698A,#C9932E,#5C4B7A,#A8935B,#4A7C96);
+  box-shadow:inset 0 0 0 2px #fff, 0 2px 6px rgba(0,0,0,.15);
+  }
+.brand-text h1{font-size:1.15rem; margin:0; line-height:1.1;}
+.brand-text span{font-size:.72rem; color:var(--ink-soft); text-transform:uppercase; letter-spacing:.08em;}
+nav.tabs{display:flex; gap:6px; flex-wrap:wrap;}
+nav.tabs button{
+  border:1px solid transparent; background:transparent; color:var(--ink-soft);
+font-family:'Inter',sans-serif; font-size:.86rem; font-weight:600;
+padding:8px 14px; border-radius:999px; cursor:pointer; transition:.15s;
+}
+nav.tabs button:hover{background:var(--card-line);}
+nav.tabs button.active{background:var(--ink); color:var(--bg);}
+.coulisses-toggle{display:flex; align-items:center; gap:8px; font-size:.78rem; color:var(--ink-soft); font-weight:600;}
+.switch{position:relative; width:40px; height:22px; background:#D9C79E; border-radius:999px; cursor:pointer; transition:.2s;}
+.switch::after{content:''; position:absolute; top:2px; left:2px; width:18px; height:18px; border-radius:50%; background:#fff; box-shadow:0 1px 3px rgba(0,0,0,.3); transition:.2s;}
+  .switch.on{background:var(--burgundy);}
+.switch.on::after{left:20px;}
+.view{display:none; padding-top:28px;}
+.view.active{display:block;}
+.hero{
+  background:linear-gradient(135deg, #fff8ea 0%, var(--card) 60%);
+    border:1px solid var(--card-line); border-radius:20px; padding:40px 36px;
+box-shadow:var(--shadow); margin-bottom:28px; position:relative; overflow:hidden;
+}
+.hero h1{font-size:2.3rem; margin-bottom:.15em;}
+.hero .tagline{font-size:1.05rem; color:var(--burgundy); font-weight:600; margin-bottom:.6em;}
+.hero p.desc{max-width:640px; color:var(--ink-soft);}
+.stat-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin:26px 0;}
+.stat-card{background:var(--card); border:1px solid var(--card-line); border-radius:var(--radius); padding:18px; box-shadow:var(--shadow);}
+.stat-card .num{font-family:'Fraunces',serif; font-size:1.7rem; color:var(--gold-deep); font-weight:700;}
+.stat-card .label{font-size:.8rem; color:var(--ink-soft);}
+.phase-banner{
+  background:var(--bg-soft); border:1px dashed var(--gold); border-radius:var(--radius);
+padding:18px 22px; margin-bottom:28px; display:flex; gap:16px; align-items:flex-start;
+}
+.phase-banner .pin{font-size:1.4rem;}
+.phase-banner h4{margin-bottom:.2em; color:var(--burgundy);}
+.phase-banner p{margin:0; font-size:.92rem; color:var(--ink-soft);}
+.feature-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:16px;}
+.feature-card{
+  background:var(--card); border:1px solid var(--card-line); border-radius:var(--radius);
+padding:20px; box-shadow:var(--shadow); cursor:pointer;
+}
+.feature-card .icon{font-size:1.6rem;}
+.feature-card h3{font-size:1.02rem; margin:.4em 0 .25em;}
+.feature-card p{font-size:.84rem; color:var(--ink-soft); margin:0;}
+.section-intro{max-width:720px; color:var(--ink-soft); margin-bottom:22px;}
+.sections-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:16px;}
+.sec-card{
+  border-radius:var(--radius); padding:20px; box-shadow:var(--shadow);
+border:1px solid var(--card-line); background:var(--card); border-top:6px solid var(--c);
+position:relative;
+}
+.sec-card .badge{
+position:absolute; top:14px; right:14px; font-size:.66rem; font-weight:700;
+padding:3px 9px; border-radius:999px; background:var(--c); color:#fff; opacity:.9;
+}
+.sec-card .icon{font-size:1.8rem;}
+.sec-card h3{font-size:1.15rem; margin:.3em 0 0;}
+.sec-card .el{font-size:.78rem; color:var(--ink-soft); text-transform:uppercase; letter-spacing:.06em; margin-bottom:.6em;}
+.sec-card .field{margin-bottom:.5em;}
+.sec-card .field b{display:block; font-size:.68rem; text-transform:uppercase; letter-spacing:.05em; color:var(--c); margin-bottom:1px;}
+.sec-card .field span{font-size:.83rem;}
+  .filters{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:22px;}
+.filters button{
+  border:1px solid var(--card-line); background:var(--card); color:var(--ink-soft);
+padding:7px 14px; border-radius:999px; font-size:.8rem; font-weight:600; cursor:pointer;
+}
+.filters button.active{background:var(--ink); color:var(--bg); border-color:var(--ink);}
+.chars-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:16px;}
+.char-card{background:var(--card); border:1px solid var(--card-line); border-radius:var(--radius); padding:18px; box-shadow:var(--shadow);}
+.char-card .tag{display:inline-block; background:var(--bg-soft); color:var(--burgundy); font-size:.7rem; font-weight:700; padding:3px 9px; border-radius:999px; margin-bottom:8px;}
+.char-card h3{font-size:1.05rem; margin-bottom:.1em;}
+.char-card .section-name{font-size:.78rem; color:var(--gold-deep); font-weight:600; margin-bottom:.6em;}
+.char-card p{font-size:.85rem; margin-bottom:.4em;}
+.char-card .faille, .char-card .arc{font-size:.8rem; color:var(--ink-soft);}
+.char-card .faille b, .char-card .arc b{color:var(--ink);}
+.secret-name{background:var(--burgundy); color:#fff; padding:6px 10px; border-radius:8px; font-size:.78rem; margin-top:8px; display:none;}
+body.coulisses .secret-name{display:block;}
+.tomes-track{display:grid; grid-template-columns:repeat(5,1fr); gap:16px;}
+.tome-card{background:var(--card); border:1px solid var(--card-line); border-radius:var(--radius); overflow:hidden; box-shadow:var(--shadow); display:flex; flex-direction:column;}
+.tome-cover{aspect-ratio:2/3; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:10px; background:linear-gradient(160deg, var(--c) 0%, #2b2016 145%); color:#fff; position:relative; overflow:hidden;}
+.tome-cover .tome-icon{font-size:2.3rem; z-index:1;}
+.tome-cover .tome-num{font-family:'Fraunces',serif; font-weight:700; font-size:.78rem; letter-spacing:.08em; text-transform:uppercase; z-index:1;}
+.tome-body{padding:14px 14px 16px; flex:1; display:flex; flex-direction:column;}
+.tome-body .kicker{font-size:.7rem; text-transform:uppercase; letter-spacing:.07em; color:var(--ink-soft); font-weight:700;}
+.tome-body h3{font-size:1.02rem; margin:.15em 0 .3em;}
+.tome-body .tagline{font-size:.8rem; font-style:italic; color:var(--ink-soft); margin-bottom:.6em;}
+.status-pill{font-size:.68rem; font-weight:700; padding:4px 9px; border-radius:999px; display:inline-block; margin-top:auto; align-self:flex-start;}
+.status-pill.reecriture{background:#F3D9C4; color:#8C4A1F;}
+.status-pill.retouche{background:#D9E4CB; color:#4A6B2E;}
+.arcline{font-size:.72rem; color:var(--ink-soft); margin-top:8px; border-top:1px dashed var(--card-line); padding-top:6px;}
+.chrono-grid{display:grid; grid-template-columns:1.3fr 1fr; gap:22px; margin-bottom:26px;}
+.panel{background:var(--card); border:1px solid var(--card-line); border-radius:var(--radius); padding:22px; box-shadow:var(--shadow);}
+.panel h3{font-size:1.1rem; color:var(--burgundy);}
+.two-col{display:grid; grid-template-columns:1fr 1fr; gap:16px;}
+.founders-table{width:100%; border-collapse:collapse; font-size:.85rem;}
+.founders-table th,.founders-table td{border-bottom:1px solid var(--card-line); padding:7px 6px; text-align:left;}
+.founders-table th{font-size:.72rem; text-transform:uppercase; letter-spacing:.04em; color:var(--ink-soft);}
+.faction-card{border-radius:14px; padding:16px; border:1px solid var(--card-line);}
+.faction-card.gardiens{background:#EAF0E4;}
+.faction-card.veilleurs{background:#F3E2DE;}
+.faction-card h4{margin-bottom:.3em;}
+.faction-card p{font-size:.85rem; margin-bottom:0;}
+.coulisses-panel{display:none; margin-top:8px;}
+body.coulisses .coulisses-panel{display:block;}
+.coulisses-flag{background:var(--burgundy); color:#fff; font-size:.68rem; font-weight:700; padding:3px 9px; border-radius:999px; display:inline-block; margin-bottom:10px;}
+.timeline{list-style:none; margin:0; padding:0;}
+.timeline li{padding:10px 0 10px 20px; border-left:2px solid var(--card-line); position:relative; font-size:.86rem;}
+.timeline li::before{content:''; width:9px; height:9px; border-radius:50%; background:var(--gold); position:absolute; left:-6px; top:14px;}
+  .timeline li.now::before{background:var(--burgundy);}
+.timeline li b{display:block; color:var(--ink); font-size:.9rem;}
+.todo-list{margin:0; padding-left:18px; font-size:.85rem; color:var(--ink-soft);}
+footer{text-align:center; color:var(--ink-soft); font-size:.8rem; padding:30px 0 10px;}
+@media (max-width:1000px){
+.stat-grid,.feature-grid,.sections-grid{grid-template-columns:repeat(2,1fr);}
+.chars-grid{grid-template-columns:repeat(2,1fr);}
+.tomes-track{grid-template-columns:repeat(3,1fr);}
+.chrono-grid,.two-col{grid-template-columns:1fr;}
+}
+@media (max-width:640px){
+.stat-grid,.feature-grid,.sections-grid,.chars-grid{grid-template-columns:1fr;}
+.tomes-track{grid-template-columns:repeat(2,1fr);}
+}
+</style>
+  </head>
+  <body>
+  <div class="app">
+  <header class="top">
+  <div class="brand">
+  <div class="crest"></div>
+  <div class="brand-text">
+  <h1>L'Académie des Cinq Forces</h1>
+  <span>Tableau de bord de la saga</span>
+  </div>
+  </div>
+  <nav class="tabs" id="tabs">
+  <button data-view="accueil" class="active">Accueil</button>
+  <button data-view="univers">Univers &amp; Sections</button>
+  <button data-view="personnages">Personnages</button>
+  <button data-view="tomes">Tomes</button>
+  <button data-view="chronologie">Chronologie &amp; Suivi</button>
+  </nav>
+  <div class="coulisses-toggle">
+  Mode coulisses
+<div class="switch" id="coulissesSwitch"></div>
+  </div>
+  </header>
+  <section class="view active" id="view-accueil">
+  <div class="hero">
+  <h1>L'Académie des Cinq Forces</h1>
+  <div class="tagline">Cozy fantasy · Prologue + 8 tomes + Épilogue</div>
+  <p class="desc">Dans une académie de magie coupée du monde, huit sections se répartissent des dons hérités de sept fondateurs — et une convergence qu'on croyait impossible. Trois élèves que personne n'a vraiment choisis vont découvrir ce que l'histoire officielle a caché depuis cinq siècles.</p>
+  </div>
+  <div class="stat-grid">
+  <div class="stat-card"><div class="num">10</div><div class="label">manuscrits rédigés &amp; relus (Prologue + 8 tomes + Épilogue)</div></div>
+  <div class="stat-card"><div class="num">8</div><div class="label">sections — 5 visibles, 2 cachées, 1 originelle</div></div>
+  <div class="stat-card"><div class="num">69</div><div class="label">personnages recensés dans la bible de canon</div></div>
+  <div class="stat-card"><div class="num">01.04.27</div><div class="label">lancement visé — Prologue + précommande Tome 1</div></div>
+  </div>
+  <div class="phase-banner">
+  <div class="pin">📍</div>
+  <div>
+  <h4>Où en est la saga, aujourd'hui</h4>
+  <p>La saga est canoniquement close et relue depuis juillet 2026, mais un repositionnement <b>Cozy Fantasy</b> a rouvert deux chantiers de réécriture (la mort de l'Élu au Tome 8, et l'arc de Gabriel sur sept tomes). On est actuellement dans la fenêtre de <b>planification scène par scène</b> (5 → 23 août 2026), avant l'exécution tome par tome. Détails dans l'onglet <b>Chronologie &amp; Suivi</b> (mode coulisses).</p>
+  </div>
+  </div>
+  <div class="feature-grid" id="homeFeatures">
+  <div class="feature-card" data-goto="univers">
+  <div class="icon">🗺️</div>
+  <h3>Univers &amp; 8 Sections</h3>
+  <p>Les huit forces, leurs valeurs, leurs pouvoirs, l'académie et la cérémonie des épreuves.</p>
+  </div>
+  <div class="feature-card" data-goto="personnages">
+  <div class="icon">🎭</div>
+  <h3>Personnages</h3>
+  <p>Le Trio d'Or, le groupe, les antagonistes, les fondateurs — fiches classées et filtrables.</p>
+  </div>
+  <div class="feature-card" data-goto="tomes">
+  <div class="icon">📖</div>
+  <h3>Tomes &amp; Progression</h3>
+  <p>Prologue, huit tomes, épilogue — couvertures, taglines et statut de réécriture.</p>
+  </div>
+  <div class="feature-card" data-goto="chronologie">
+<div class="icon">⏳</div>
+<h3>Chronologie &amp; Suivi</h3>
+<p>Le Fracas, les fondateurs, Gardiens contre Veilleurs — et le rétroplanning de lancement.</p>
+</div>
+</div>
+</section>
+<section class="view" id="view-univers">
+<h2>Les Huit Sections</h2>
+<p class="section-intro">Chaque nouvel élève passe cinq épreuves dans un ordre aléatoire, à l'issue desquelles un objet magique peut se manifester. L'élève choisit ensuite sa section. Deux sections — l'Éclat et le Songe — ont disparu le jour du Fracas et restent cachées ; une huitième, La Source, n'a qu'un seul cas connu depuis les fondateurs.</p>
+<div class="sections-grid" id="sectionsGrid"></div>
+</section>
+<section class="view" id="view-personnages">
+  <h2>Personnages</h2>
+  <div class="filters" id="charFilters"></div>
+  <div class="chars-grid" id="charsGrid"></div>
+  </section>
+  <section class="view" id="view-tomes">
+  <h2>Prologue, huit tomes &amp; Épilogue</h2>
+  <p class="section-intro">Chaque tome porte implicitement les valeurs d'une section, sur douze chapitres — environ un par mois de l'année scolaire.</p>
+<div class="tomes-track" id="tomesGrid"></div>
+</section>
+<section class="view" id="view-chronologie">
+  <h2>Le Jour du Fracas</h2>
+  <div class="chrono-grid">
+  <div class="panel">
+  <h3>Ce que les élèves savent</h3>
+  <p>Version officielle, enseignée en Histoire de la Magie : un « Grand Conflit accidentel » entre deux fondateurs. Les sections de l'Éclat et du Songe ont « disparu ». Les noms d'Aurel et Nyx sont rarement prononcés, par malaise collectif — personne ne sait vraiment pourquoi.</p>
+  <h3>La véritable histoire</h3>
+  <p>Aurel voulait que l'Éclat et le Songe dirigent les cinq autres sections ; Nyx refusait cette hiérarchie. Une menace extérieure a mis des élèves en danger : Aurel a voulu frapper fort et vite, Nyx a refusé, ayant perçu une complexité dans la menace. Ils ont agi chacun de leur côté — et quand sa lumière et son obscurité se sont heurtées, une onde de fracture s'est propagée sur tous les territoires. Des dizaines d'élèves ont péri ; les bâtiments se sont partiellement effondrés.</p>
+  <p>Depuis, deux zones restent impénétrables : le <b>Sanctuaire de l'Éclat</b> (lumière aveuglante) et le <b>Refuge du Songe</b> (obscurité absolue). Certains disent y sentir encore une présence.</p>
+  </div>
+  <div class="panel">
+  <h3>Les Sept Fondateurs</h3>
+<table class="founders-table">
+<tr><th>Fondateur</th><th>Section</th><th>Destin</th></tr>
+<tr><td>Maren</td><td>Écho</td><td>A survécu — écrits cachés dans les racines</td></tr>
+  <tr><td>Rowan</td><td>Ancrage</td><td>A survécu — premier arbre de l'Éveil</td></tr>
+  <tr><td>Zaël</td><td>Envol</td><td>Disparu dans le vent</td></tr>
+  <tr><td>Brann</td><td>Ardeur</td><td>A survécu — flamme perpétuelle</td></tr>
+  <tr><td>Solen</td><td>Éveil</td><td>A décidé, seul, de cacher les sections</td></tr>
+  <tr><td>Aurel</td><td>Éclat</td><td>Cru mort — destin ambigu</td></tr>
+  <tr><td>Nyx</td><td>Songe</td><td>Disparue volontairement</td></tr>
+  </table>
+  </div>
+  </div>
+  <h2>Deux camps, un même Fracas</h2>
+  <div class="two-col" style="margin-bottom:28px;">
+  <div class="faction-card gardiens">
+  <h4>🕊️ L'Ordre des Gardiens</h4>
+  <p>Coalition de résistance aux Veilleurs : descendants des deux sections cachées et membres des cinq sections classiques qui refusent leur doctrine. Florence et Charles, les parents d'Elena, y sont stratèges. Lecture du Fracas : ce qui a été brisé peut — et doit — être réconcilié.</p>
+  </div>
+  <div class="faction-card veilleurs">
+  <h4>👁️ Les Veilleurs</h4>
+  <p>Familles des cinq sections classiques, nées du Fracas, convaincues que ce qui a été brisé doit rester brisé. Trois niveaux : les cerveaux cachés (hors académie), la taupe institutionnelle (Albert), les exécutants étudiants envoyés chaque génération (Gabriel, puis Pierre).</p>
+</div>
+  </div>
+  <div style="display:flex; align-items:center; gap:10px; margin-bottom:6px;">
+  <h2 style="margin:0;">Suivi éditorial</h2>
+  <span style="font-size:.78rem; color:var(--ink-soft);">— visible en mode coulisses</span>
+  </div>
+  <div class="coulisses-panel">
+  <div class="panel" style="margin-bottom:18px;">
+  <span class="coulisses-flag">Repositionnement en cours</span>
+<h3>Cozy Fantasy — Scénario A retenu</h3>
+<p>La saga était canoniquement close et publiable depuis le 11 juillet 2026. Le diagnostic du 2 août a conclu qu'un vrai positionnement « cozy fantasy » exige une réécriture structurelle (Scénario A) plutôt qu'un simple habillage marketing : deux chantiers ont été rouverts — <b>Chantier A</b>, la mort de l'Élu au climax du Tome 8, et <b>Chantier B</b>, l'arc de conspiration de Gabriel filé sur sept tomes (T2, T4-T9).</p>
+  </div>
+  <div class="chrono-grid">
+  <div class="panel">
+  <h3>Rétroplanning — lancement du 1er avril 2027</h3>
+  <ul class="timeline" id="timelineList"></ul>
+  </div>
+  <div class="panel">
+  <h3>À trancher — patronymes &amp; canon</h3>
+  <p style="font-size:.85rem;">Patronymes principaux encore manquants (à fixer avant toute réédition) :</p>
+  <ul class="todo-list">
+  <li>Albert, Aurore, Olivier, Henri, Pierre, Delphine</li>
+  <li>Mila, Mathéo, Inaya</li>
+  </ul>
+  <p style="font-size:.85rem; margin-top:12px;">Points ouverts hérités du canon :</p>
+  <ul class="todo-list">
+  <li>« Cinq » Forces (titre) vs « Huit » in-monde — à expliciter ?</li>
+  <li>La Source : section à part entière, ou pas une section ?</li>
+  <li>Les familiers : conservés jusqu'à l'Épilogue, ou remplacés par la boussole ?</li>
+  <li>Rôle partagé Albert / Pierre dans la trahison — à clarifier</li>
+</ul>
+</div>
+</div>
+  </div>
+  </section>
+  </div>
+  <footer>L'Académie des Cinq Forces — tableau de bord personnel · généré depuis la bible de canon</footer>
+  <script>
+  const test = `hello ${1+1} world`;
+const arr = [1,2,3];
+const sections = [
+{id:'echo', name:"L'Écho", element:'Eau', icon:'💧', color:'#4A7C96', tome:'Tome 1', visible:'Visible',
+  values:`Intuition, mémoire, adaptabilité, vérité`,
+  profile:`Empathiques, observateurs, discrets — ils portent le poids des émotions des autres.`,
+powers:`Hydrokinésie, lecture des émotions et des souvenirs, communication par les rêves.`,
+  landscape:`Forêt brumeuse traversée par une rivière argentée.`},
+{id:'ancrage', name:"L'Ancrage", element:'Terre', icon:'🌿', color:'#7A6A42', tome:'Tome 2', visible:'Visible',
+  values:`Loyauté, patience, protection, endurance`,
+  profile:`Fiables, constants, un peu têtus mais bienveillants — attachés aux traditions.`,
+  powers:`Géokinésie, guérison physique, communication avec plantes et animaux, boucliers de pierre.`,
+landscape:`Plaine de pierre et arbres centenaires.`},
+{id:'envol', name:"L'Envol", element:'Air', icon:'🍃', color:'#6C7189', tome:'Tome 3', visible:'Visible',
+  values:`Liberté, curiosité, créativité, légèreté`,
+profile:`Esprits vifs, imprévisibles, visionnaires — un peu allergiques aux règles.`,
+powers:`Aérokinésie, lévitation et vol, manipulation des sons et de la voix, vélocité fulgurante.`,
+  landscape:`Hautes falaises balayées par les vents.`},
+{id:'ardeur', name:"L'Ardeur", element:'Feu', icon:'🔥', color:'#B5502E', tome:'Tome 4', visible:'Visible',
+  values:`Courage, passion, ambition, justice`,
+  profile:`Charismatiques, déterminés, impulsifs — profondément loyaux.`,
+  powers:`Pyrokinésie, aura intimidante, résistance à la douleur, don de voir les mensonges.`,
+  landscape:`Plateau volcanique traversé de fissures de chaleur.`},
+{id:'eveil', name:"L'Éveil", element:'Cœur', icon:'💗', color:'#B5698A', tome:'Tome 5', visible:'Visible',
+  values:`Équilibre, compassion, sagesse, unité`,
+  profile:`Rares, mystérieux — ils comprennent tous les élèves et portent le poids de l'harmonie.`,
+powers:`Amplifier ou apaiser les pouvoirs d'autrui, télékinésie émotionnelle, fusion temporaire.`,
+  landscape:`Jardin secret central, toujours en fleurs.`},
+{id:'eclat', name:"L'Éclat", element:'Soleil', icon:'☀️', color:'#C9932E', tome:'Tome 6', visible:'Cachée',
+  values:`Puissance, vérité absolue, rayonnement, sacrifice`,
+profile:`Extrêmement rares, charismatiques — une pression immense, une tendance à s'isoler.`,
+  powers:`Photokinésie, révéler la vérité, aura solaire, purification, libération d'énergie totale.`,
+  landscape:`Le Sanctuaire de l'Éclat — lumière aveuglante, interdit depuis le Fracas.`},
+  {id:'songe', name:'Le Songe', element:'Lune', icon:'🌙', color:'#5C4B7A', tome:'Tome 7', visible:'Cachée',
+  values:`Mystère, dualité, transformation, patience infinie`,
+  profile:`Aussi rares que l'Éclat, discrets, double nature — un lien mystérieux les unit à l'Éclat.`,
+  powers:`Ombrikinésie, navigation dans les rêves, illusion, manipulation des cycles.`,
+landscape:`Le Refuge du Songe — obscurité absolue, interdit depuis le Fracas.`},
+{id:'source', name:'La Source', element:'Origine', icon:'✨', color:'#A8823A', tome:'Tome 8', visible:'Originelle',
+  values:`Convergence, unité primordiale, ce qui rend tout possible`,
+profile:`Un seul cas connu depuis les fondateurs. Aucun précédent documenté.`,
+powers:`Accès aux sept sections — non leur somme, mais l'état qui précédait leur division.`,
+landscape:`Ni aile ni territoire propre : elle traverse les sept espaces fondateurs.`},
+  ];
+const characters = [
+{name:'Elena Royo', cat:'trio', section:"L'Éveil · La Source", tag:'La convergence',
+  desc:`Sélection inédite : elle réagit aux sept sections à la fois. Fille de Florence (lignée de l'Éclat) et Charles (lignée du Songe) — la réunification incarnée de ce qui fut brisé au Fracas.`,
+  faille:`S'auto-juge sévèrement, cache sa douleur derrière un sourire.`,
+arc:`Découverte progressive de ce qu'elle est → réconciliation avec elle-même et son destin.`},
+  {name:'Alexia Ferrand', cat:'trio', section:"L'Éclat (accueil : L'Éveil)", tag:'La révélation',
+  desc:`Milieu non-magique. Écho lointain d'une lignée de l'Éclat par son arrière-grand-tante Céleste. Première du trio à découvrir la vérité sur elle-même.`,
+  faille:`Étouffe ses émotions jusqu'à l'explosion, puis la honte.`,
+arc:`La fille qui voulait disparaître devient celle qui rayonne.`},
+{name:'Julien Arnaud', cat:'trio', section:"Le Songe (accueil : L'Envol)", tag:"L'attention comme action",
+  desc:`Communauté magique — sa sélection a été vécue comme une honte familiale. Calme, acuité redoutable, détermination silencieuse.`,
+faille:`Un blindage posé sur une fragilité profonde.`,
+  arc:`Choisir entre la famille qui l'a façonné et ce qu'il est vraiment.`},
+{name:'Léa Fontaine', cat:'groupe', section:"L'Écho", tag:'Empathe',
+  desc:`Famille magique. Ressent ce qui échappe aux autres — devient, plus tard, la thérapeute de la « zone grise ».`,
+faille:`Se dissout dans les besoins des autres.`, arc:`Apprendre à s'écouter elle-même.`},
+  {name:'Gabriel Morel', cat:'groupe', section:"L'Ancrage", tag:'Le pilier',
+  desc:`Fils d'un membre des Veilleurs, envoyé à l'académie avec une mission. Choisit le bon côté dès la première année — devient le 8ᵉ membre secret du groupe.`,
+  faille:`Loyauté aveugle.`, arc:`Distinguer fidélité et soumission.`},
+{name:'Hugo Vernet', cat:'groupe', section:"L'Envol", tag:'Jumeau de Clara',
+  desc:`Non-magique. Imprévisible, farceur — sa magie créative (lévitation) se déclenche quand il rit vraiment.`,
+faille:``, arc:`Co-fonde plus tard l'atelier « Hugo &amp; Clara ».`},
+  {name:'Clara Vernet', cat:'groupe', section:"L'Ardeur", tag:'Jumelle de Hugo',
+  desc:`Non-magique. Explosive, directe, humour mordant — elle chauffe les objets quand elle s'énerve.`,
+  faille:``, arc:`Co-fonde l'atelier « Hugo &amp; Clara » avec son frère.`},
+  {name:'Antoine Rezeau', cat:'groupe', section:"L'Éveil", tag:'Médiateur',
+  desc:`Famille magique. Sent la fragilité cachée de Julien. Devient responsable de l'accueil des premières années.`,
+  faille:`S'oublie dans le soin des autres.`, arc:`Apprendre à dire non.`},
+  {name:`« Celui Dont Le Nom A Été Longtemps Oublié »`, cat:'presence', section:'Le Concierge', tag:"L'Élu de La Source",
+  desc:`Présence liée au château depuis 437 ans, neutre, n'appartenant à aucune section. Attendait Elena sans savoir le dire. Son nom n'est jamais imprimé dans le texte — Elena seule le reçoit, au Tome 8.`,
+  faille:``, arc:`Trouve son repos définitif au climax du Tome 8 : délivrance méritée et perte réelle pour Elena — le « prix » de son arc.`,
+  secret:`Nom secret (réservé au mode coulisses) : Ewen`},
+{name:'Albert', cat:'antagoniste', section:'Grand Maître', tag:'La taupe institutionnelle',
+  desc:`Brillant, charismatique, autorité naturelle. Membre des Veilleurs infiltré au sommet de l'institution — découvre progressivement ce qu'Elena représente.`,
+  faille:``, arc:`De la surveillance à la menace existentielle, puis aveux et rédemption.`},
+{name:'Les Veilleurs', cat:'antagoniste', section:'Organisation', tag:'Nés du Fracas',
+  desc:`Familles des cinq sections classiques, convaincues que ce qui a été brisé doit rester brisé. Trois niveaux : cerveaux cachés, taupe institutionnelle (Albert), exécutants étudiants (Gabriel, puis Pierre).`,
+faille:``, arc:``},
+{name:'Florence Royo', cat:'famille', section:'née Devereux', tag:"Mère d'Elena",
+  desc:`Descendante de la lignée de l'Éclat, magie colossale dissimulée. Stratège de l'Ordre des Gardiens — le carnet bleu. Surnomme Elena « Mon Étoile ».`, faille:``, arc:``},
+  {name:'Charles Royo', cat:'famille', section:'Ordre des Gardiens', tag:"Père d'Elena",
+  desc:`Descendant de la lignée du Songe. Figure de réconfort pour Elena, qu'il surnomme « Chipie ».`, faille:``, arc:``},
+  {name:'Maren', cat:'fondateur', section:"L'Écho", tag:'La mémoire',
+  desc:`A survécu au Fracas. Ses écrits, cachés dans les racines des arbres, sont retrouvés cinq siècles plus tard.`, faille:``, arc:``},
+{name:'Rowan', cat:'fondateur', section:"L'Ancrage", tag:'Le pilier',
+  desc:`A survécu, a planté le premier arbre du jardin de l'Éveil — il n'a jamais perdu une feuille.`, faille:``, arc:``},
+{name:'Zaël', cat:'fondateur', section:"L'Envol", tag:"L'architecte des idées",
+  desc:`Disparu dans le vent au Fracas. Une plume translucide a été retrouvée dans la salle des épreuves.`, faille:``, arc:``},
+  {name:'Brann', cat:'fondateur', section:"L'Ardeur", tag:'La conscience',
+  desc:`A survécu — une flamme perpétuelle brûle encore dans une fissure du plateau volcanique.`, faille:``, arc:``},
+{name:'Solen', cat:'fondateur', section:"L'Éveil", tag:'Le cœur',
+  desc:`A pris seul la décision de cacher les deux sections après le Fracas — et en porte le poids.`, faille:``, arc:``},
+{name:'Aurel', cat:'fondateur', section:"L'Éclat", tag:'La vision (nuancée)',
+  desc:`Voulait que l'Éclat et le Songe dirigent les autres sections. Son affrontement avec Nyx a déclenché le Fracas — ni tout à fait bon, ni tout à fait mauvais.`, faille:``, arc:``},
+{name:'Nyx', cat:'fondateur', section:'Le Songe', tag:'Le mystère (nuancée)',
+  desc:`Refusait la hiérarchie voulue par Aurel — l'amour brisé d'Aurel. Disparue volontairement ; une présence se ressent encore dans le Refuge.`, faille:``, arc:``},
+  {name:'Henri', cat:'directeur', section:"L'Écho", tag:"Directeur de Léa",
+  desc:`Calme, attentif, perçoit les émotions. Loyal à Albert — des doutes naissants.`, faille:``, arc:``},
+{name:'Pierre', cat:'directeur', section:"L'Ancrage", tag:'Directeur — et le traître effectif',
+  desc:`Strict, traditionnel, rigide. Loyal sans réserve à Albert en façade — c'est en réalité lui qui livre. Finit apiculteur.`, faille:``, arc:``},
+  {name:'Aurore', cat:'directeur', section:"L'Envol → Le Songe", tag:"Directrice de Hugo et Julien",
+  desc:`Libre penseuse, curieuse, atypique. Doute d'Albert dès la première anomalie. Épouse d'Albert ; passe ensuite à la direction du Songe.`, faille:``, arc:``},
+{name:'Delphine', cat:'directeur', section:"L'Ardeur", tag:'Directrice de Clara',
+  desc:`Passionnée, exigeante, charismatique. Loyale à Albert par affection — jusqu'à prendre le parti du Trio.`, faille:``, arc:``},
+  {name:'Olivier', cat:'directeur', section:"L'Éveil", tag:"Directeur d'Elena, Alexia et Antoine",
+  desc:`Bienveillant, protecteur, à l'écoute. Le doute le plus fort : il a la garde des trois anomalies. Succède à Albert à la tête de l'institution.`, faille:``, arc:``},
+  ];
+const catLabels = {
+  trio:"Le Trio d'Or", groupe:'Le Groupe', presence:'Présence', antagoniste:'Antagonistes',
+    famille:"Famille d'Elena", fondateur:'Fondateurs', directeur:'Directeurs de section'
+    };
+const tomes = [
+{n:'Prologue', title:"Avant les portes, il y avait déjà tout", tagline:'Trois vies, trois solitudes', color:'#8C3B3B', icon:'📜', chapters:12, status:'retouche', statusLabel:'Retouches légères', arcline:'Rencontres → Signes → Peurs → Convocation'},
+{n:'Tome 1', title:"L'Écho", tagline:'Écouter le monde avant de le comprendre', color:'#4A7C96', icon:'💧', chapters:12, status:'retouche', statusLabel:'Retouches légères', arcline:'Arrivée → Résonance → Trouble → Premier écho'},
+{n:'Tome 2', title:"L'Ancrage", tagline:"Ce qu'on protège dit qui on est", color:'#7A6A42', icon:'🌿', chapters:12, status:'reecriture', statusLabel:'Réécriture cozy en cours', arcline:'Racines → Loyauté → Fissure → Choix'},
+{n:'Tome 3', title:"L'Envol", tagline:"Les règles existent pour ceux qui n'ont pas de questions", color:'#6C7189', icon:'🍃', chapters:12, status:'retouche', statusLabel:'Retouches légères', arcline:'Curiosité → Exploration → Découverte → Point de non-retour'},
+{n:'Tome 4', title:"L'Ardeur", tagline:'Le courage ne précède pas la peur — il la traverse', color:'#B5502E', icon:'🔥', chapters:12, status:'reecriture', statusLabel:'Réécriture cozy en cours', arcline:'Ignition → Conflit → Justice → Brûlure'},
+{n:'Tome 5', title:"L'Éveil", tagline:"L'harmonie n'est pas l'absence de conflit", color:'#B5698A', icon:'💗', chapters:12, status:'reecriture', statusLabel:'Réécriture cozy en cours', arcline:'Équilibre → Soin → Fissures → Harmonie fragile'},
+{n:'Tome 6', title:"L'Éclat", tagline:'La vérité absolue a un prix absolu', color:'#C9932E', icon:'☀️', chapters:12, status:'reecriture', statusLabel:'Réécriture cozy en cours', arcline:"L'appel → La question → Le choc → Le rayonnement"},
+{n:'Tome 7', title:'Le Songe', tagline:"Ce qu'on cache finit par nous définir", color:'#5C4B7A', icon:'🌙', chapters:12, status:'reecriture', statusLabel:'Réécriture cozy en cours', arcline:'Révélation → Dualité → Confrontation → Transformation'},
+{n:'Tome 8', title:'La Source', tagline:'Avant les sept, il y avait un seul souffle', color:'#A8823A', icon:'✨', chapters:12, status:'reecriture', statusLabel:'Réécriture cozy — chantier prioritaire', arcline:"L'avant → La convergence → L'union → L'après"},
+{n:'Épilogue', title:'Ce qu’ils sont devenus', tagline:'Ce qui a été ne peut être défait. Seulement porté.', color:'#4A6B2E', icon:'🕊️', chapters:12, status:'reecriture', statusLabel:'Réécriture cozy en cours', arcline:'Héritage → Chemins → Liens → Horizon'},
+];
+const timeline = [
+{when:'11 juillet 2026', text:'Saga canoniquement close : dix manuscrits relus (LLM Council), jugés « prêts à publier ».', now:false},
+  {when:'2 août 2026', text:"Diagnostic de repositionnement « Cozy Fantasy » : Scénario A retenu — réécriture structurelle de deux chantiers.", now:false},
+  {when:'5 → 23 août 2026', text:'Planification scène par scène des chantiers A (mort de l’Élu) et B (arc de Gabriel), à valider avant toute réécriture.', now:true},
+  {when:'24 août → 8 nov. 2026', text:'Exécution tome par tome : T8, T2, T4, T5, T6, T7, T9, puis retouches légères sur Prologue/T1/T3.', now:false},
+  {when:'9 → 29 nov. 2026', text:'Audit de continuité + polish final sur les dix manuscrits réécrits.', now:false},
+  {when:'nov. 2026 → jan. 2027', text:'Traduction anglaise, en pipeline dès qu’un tome est verrouillé.', now:false},
+  {when:'jan. → mars 2027', text:'Dispositif de lancement : calendrier éditorial, métadonnées KDP, équipe ARC, newsletter.', now:false},
+  {when:'1er avril 2027', text:'Publication du Prologue + précommande du Tome 1. Rapid-release des tomes 2 à 9 toutes les 2-4 semaines ensuite.', now:false},
+  ];
+function renderSections(){
+  const grid = document.getElementById('sectionsGrid');
+grid.innerHTML = sections.map(s => `
+  <div class="sec-card" style="--c:${s.color}">
+  <span class="badge">${s.visible}</span>
+  <div class="icon">${s.icon}</div>
+  <h3>${s.name}</h3>
+  <div class="el">${s.element} · ${s.tome}</div>
+  <div class="field"><b>Valeurs</b><span>${s.values}</span></div>
+  <div class="field"><b>Profil</b><span>${s.profile}</span></div>
+  <div class="field"><b>Pouvoirs</b><span>${s.powers}</span></div>
+  <div class="field"><b>Territoire</b><span>${s.landscape}</span></div>
+  </div>
+  `).join('');
+  }
+  function renderTomes(){
+    const grid = document.getElementById('tomesGrid');
+grid.innerHTML = tomes.map(t => `
+  <div class="tome-card">
+  <div class="tome-cover" style="--c:${t.color}">
+  <span class="tome-icon">${t.icon}</span>
+  <span class="tome-num">${t.n}</span>
+  </div>
+  <div class="tome-body">
+  <div class="kicker">${t.n}</div>
+  <h3>${t.title}</h3>
+  <div class="tagline">« ${t.tagline} »</div>
+  <div class="arcline">${t.arcline}</div>
+  <span class="status-pill ${t.status}">${t.statusLabel}</span>
+  </div>
+  </div>
+  `).join('');
+  }
+  let activeFilter = 'tous';
+function renderCharFilters(){
+  const cats = ['tous', ...Object.keys(catLabels)];
+const box = document.getElementById('charFilters');
+box.innerHTML = cats.map(c => `<button data-cat="${c}" class="${c===activeFilter?'active':''}">${c==='tous'?'Tous':catLabels[c]}</button>`).join('');
+  box.querySelectorAll('button').forEach(b => b.addEventListener('click', () => {
+    activeFilter = b.dataset.cat;
+    renderCharFilters();
+renderChars();
+}));
+  }
+function renderChars(){
+  const grid = document.getElementById('charsGrid');
+const list = activeFilter === 'tous' ? characters : characters.filter(c => c.cat === activeFilter);
+grid.innerHTML = list.map(c => `
+  <div class="char-card">
+  <span class="tag">${c.tag}</span>
+  <h3>${c.name}</h3>
+  <div class="section-name">${c.section}</div>
+  <p>${c.desc}</p>
+  ${c.faille ? `<p class="faille"><b>Faille —</b> ${c.faille}</p>` : ''}
+  ${c.arc ? `<p class="arc"><b>Arc —</b> ${c.arc}</p>` : ''}
+  ${c.secret ? `<div class="secret-name">🔒 ${c.secret}</div>` : ''}
+  </div>
+  `).join('');
+}
+function renderTimeline(){
+  const list = document.getElementById('timelineList');
+list.innerHTML = timeline.map(t => `
+  <li class="${t.now ? 'now' : ''}"><b>${t.when}${t.now ? ' — en cours' : ''}</b>${t.text}</li>
+  `).join('');
+                                                 }
+function goto(view){
+document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+document.getElementById('view-' + view).classList.add('active');
+document.querySelectorAll('#tabs button').forEach(b => b.classList.toggle('active', b.dataset.view === view));
+window.scrollTo({top:0, behavior:'smooth'});
+}
+document.getElementById('tabs').addEventListener('click', e => {
+  const btn = e.target.closest('button');
+  if(!btn) return;
+goto(btn.dataset.view);
+  });
+document.querySelectorAll('.feature-card').forEach(card => {
+  card.addEventListener('click', () => goto(card.dataset.goto));
+  });
+document.getElementById('coulissesSwitch').addEventListener('click', function(){
+  this.classList.toggle('on');
+document.body.classList.toggle('coulisses');
+});
+renderSections();
+renderTomes();
+renderCharFilters();
+renderChars();
+renderTimeline();
+</script>
+  </body>
+  </html>
+  
