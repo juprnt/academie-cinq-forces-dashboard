@@ -139,7 +139,10 @@ body.coulisses .coulisses-hidden-sections{display:block;}
 }
 .filters button.active{background:var(--ink); color:var(--bg); border-color:var(--ink);}
 .chars-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:16px;}
-.char-card{background:var(--card); border:1px solid var(--card-line); border-radius:var(--radius); padding:18px; box-shadow:var(--shadow);}
+.char-card{background:var(--card); border:1px solid var(--card-line); border-radius:var(--radius); padding:18px; box-shadow:var(--shadow); position:relative;}
+.gender-badge{position:absolute; top:14px; right:14px; width:22px; height:22px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:.8rem; font-weight:700; color:#fff; box-shadow:0 1px 3px rgba(0,0,0,.25);}
+.gender-badge.h{background:#4A7C96;}
+.gender-badge.f{background:#B5698A;}
 .char-card .tag{display:inline-block; background:var(--bg-soft); color:var(--burgundy); font-size:.7rem; font-weight:700; padding:3px 9px; border-radius:999px; margin-bottom:8px;}
 .char-card h3{font-size:1.05rem; margin-bottom:.1em;}
 .char-card .section-name{font-size:.78rem; color:var(--gold-deep); font-weight:600; margin-bottom:.6em;}
@@ -425,76 +428,76 @@ const sections = [
 ];
 
 const characters = [
-  {name:'Elena Royo', cat:'trio', section:"L'Éveil · La Source", tag:'La convergence',
+  {name:'Elena Royo', cat:'trio', section:"L'Éveil · La Source", tag:'La convergence', gender:'F',
    desc:`Sélection inédite : elle réagit aux sept sections à la fois. Fille de Florence (lignée de l'Éclat) et Charles (lignée du Songe) — la réunification incarnée de ce qui fut brisé au Fracas.`,
    faille:`S'auto-juge sévèrement, cache sa douleur derrière un sourire.`,
    arc:`Découverte progressive de ce qu'elle est → réconciliation avec elle-même et son destin.`},
-  {name:'Alexia Ferrand', cat:'trio', section:"L'Éclat (accueil : L'Éveil)", tag:'La révélation',
+  {name:'Alexia Ferrand', cat:'trio', section:"L'Éclat (accueil : L'Éveil)", tag:'La révélation', gender:'F',
    desc:`Milieu non-magique. Écho lointain d'une lignée de l'Éclat par son arrière-grand-tante Céleste. Première du trio à découvrir la vérité sur elle-même.`,
    faille:`Étouffe ses émotions jusqu'à l'explosion, puis la honte.`,
    arc:`La fille qui voulait disparaître devient celle qui rayonne.`},
-  {name:'Julien Arnaud', cat:'trio', section:"Le Songe (accueil : L'Envol)", tag:"L'attention comme action",
+  {name:'Julien Arnaud', cat:'trio', section:"Le Songe (accueil : L'Envol)", tag:"L'attention comme action", gender:'H',
    desc:`Communauté magique — sa sélection a été vécue comme une honte familiale. Calme, acuité redoutable, détermination silencieuse.`,
    faille:`Un blindage posé sur une fragilité profonde.`,
    arc:`Choisir entre la famille qui l'a façonné et ce qu'il est vraiment.`},
 
-  {name:'Léa Fontaine', cat:'groupe', section:"L'Écho", tag:'Empathe',
+  {name:'Léa Fontaine', cat:'groupe', section:"L'Écho", tag:'Empathe', gender:'F',
    desc:`Famille magique. Ressent ce qui échappe aux autres — devient, plus tard, la thérapeute de la « zone grise ».`,
    faille:`Se dissout dans les besoins des autres.`, arc:`Apprendre à s'écouter elle-même.`},
-  {name:'Gabriel Morel', cat:'groupe', section:"L'Ancrage", tag:'Le pilier',
+  {name:'Gabriel Morel', cat:'groupe', section:"L'Ancrage", tag:'Le pilier', gender:'H',
    desc:`Fils d'un membre des Veilleurs, envoyé à l'académie avec une mission. Choisit le bon côté dès la première année, après de forts tiraillements — devient le 8ᵉ membre secret du groupe.`,
    faille:`Loyauté aveugle.`, arc:`Distinguer fidélité et soumission.`},
-  {name:'Hugo Vernet', cat:'groupe', section:"L'Envol", tag:'Jumeau de Clara',
+  {name:'Hugo Vernet', cat:'groupe', section:"L'Envol", tag:'Jumeau de Clara', gender:'H',
    desc:`Non-magique. Imprévisible, farceur — sa magie créative (lévitation) se déclenche quand il rit vraiment.`,
    faille:``, arc:`Co-fonde plus tard l'atelier « Hugo &amp; Clara ».`},
-  {name:'Clara Vernet', cat:'groupe', section:"L'Ardeur", tag:'Jumelle de Hugo',
+  {name:'Clara Vernet', cat:'groupe', section:"L'Ardeur", tag:'Jumelle de Hugo', gender:'F',
    desc:`Non-magique. Explosive, directe, humour mordant — elle chauffe les objets quand elle s'énerve.`,
    faille:``, arc:`Co-fonde l'atelier « Hugo &amp; Clara » avec son frère.`},
-  {name:'Antoine Rezeau', cat:'groupe', section:"L'Éveil", tag:'Médiateur',
+  {name:'Antoine Rezeau', cat:'groupe', section:"L'Éveil", tag:'Médiateur', gender:'H',
    desc:`Famille magique. Sent la fragilité cachée de Julien. Devient responsable de l'accueil des premières années.`,
    faille:`S'oublie dans le soin des autres.`, arc:`Apprendre à dire non.`},
 
-  {name:`« Celui Dont Le Nom A Été Longtemps Oublié »`, cat:'presence', section:'Le Concierge', tag:"L'Élu de La Source",
+  {name:`« Celui Dont Le Nom A Été Longtemps Oublié »`, cat:'presence', section:'Le Concierge', tag:"L'Élu de La Source", gender:'H',
    desc:`Présence liée au château depuis 437 ans, neutre, n'appartenant à aucune section. Attendait Elena sans savoir le dire. Son nom n'est jamais imprimé dans le texte — Elena seule le reçoit, au Tome 8.`,
    faille:``, arc:`Trouve son repos définitif au climax du Tome 8 : délivrance méritée et perte réelle pour Elena — le « prix » de son arc.`,
    secret:`Nom secret (réservé au mode coulisses) : Ewen`},
 
-  {name:'Albert', cat:'antagoniste', section:'Grand Maître', tag:'La taupe institutionnelle',
+  {name:'Albert', cat:'antagoniste', section:'Grand Maître', tag:'La taupe institutionnelle', gender:'H',
    desc:`Brillant, charismatique, autorité naturelle. Membre des Veilleurs infiltré au sommet de l'institution — découvre progressivement ce qu'Elena représente.`,
    faille:``, arc:`De la surveillance à la menace existentielle, puis aveux et rédemption.`},
   {name:'Les Veilleurs', cat:'antagoniste', section:'Organisation', tag:'Nés du Fracas',
    desc:`Familles des cinq sections classiques, convaincues que ce qui a été brisé doit rester brisé. Trois niveaux : cerveaux cachés, taupe institutionnelle (Albert), exécutants étudiants (Gabriel, puis Pierre).`,
    faille:``, arc:``},
 
-  {name:'Florence Royo', cat:'famille', section:'née Devereux', tag:"Mère d'Elena",
+  {name:'Florence Royo', cat:'famille', section:'née Devereux', tag:"Mère d'Elena", gender:'F',
    desc:`Descendante de la lignée de l'Éclat, magie colossale dissimulée. Stratège de l'Ordre des Gardiens — le carnet bleu. Surnomme Elena « Mon Étoile ».`, faille:``, arc:``},
-  {name:'Charles Royo', cat:'famille', section:'Ordre des Gardiens', tag:"Père d'Elena",
+  {name:'Charles Royo', cat:'famille', section:'Ordre des Gardiens', tag:"Père d'Elena", gender:'H',
    desc:`Descendant de la lignée du Songe. Figure de réconfort pour Elena, qu'il surnomme « Chipie ».`, faille:``, arc:``},
 
-  {name:'Maren', cat:'fondateur', section:"L'Écho", tag:'La mémoire',
+  {name:'Maren', cat:'fondateur', section:"L'Écho", tag:'La mémoire', gender:'H',
    desc:`A survécu au Fracas. Ses écrits, cachés dans les racines des arbres, sont retrouvés cinq siècles plus tard.`, faille:``, arc:``},
-  {name:'Rowan', cat:'fondateur', section:"L'Ancrage", tag:'Le pilier',
+  {name:'Rowan', cat:'fondateur', section:"L'Ancrage", tag:'Le pilier', gender:'H',
    desc:`A survécu, a planté le premier arbre du jardin de l'Éveil — il n'a jamais perdu une feuille.`, faille:``, arc:``},
-  {name:'Zaël', cat:'fondateur', section:"L'Envol", tag:"L'architecte des idées",
+  {name:'Zaël', cat:'fondateur', section:"L'Envol", tag:"L'architecte des idées", gender:'H',
    desc:`Disparu dans le vent au Fracas. Une plume translucide a été retrouvée dans la salle des épreuves.`, faille:``, arc:``},
-  {name:'Brann', cat:'fondateur', section:"L'Ardeur", tag:'La conscience',
+  {name:'Brann', cat:'fondateur', section:"L'Ardeur", tag:'La conscience', gender:'H',
    desc:`A survécu — une flamme perpétuelle brûle encore dans une fissure du plateau volcanique.`, faille:``, arc:``},
-  {name:'Solen', cat:'fondateur', section:"L'Éveil", tag:'Le cœur',
+  {name:'Solen', cat:'fondateur', section:"L'Éveil", tag:'Le cœur', gender:'H',
    desc:`A pris seul la décision de cacher les deux sections après le Fracas — et en porte le poids.`, faille:``, arc:``},
-  {name:'Aurel', cat:'fondateur', section:"L'Éclat", tag:'La vision (nuancée)',
+  {name:'Aurel', cat:'fondateur', section:"L'Éclat", tag:'La vision (nuancée)', gender:'H',
    desc:`Voulait que l'Éclat et le Songe dirigent les autres sections. Son affrontement avec Nyx a déclenché le Fracas — ni tout à fait bon, ni tout à fait mauvais.`, faille:``, arc:``},
-  {name:'Nyx', cat:'fondateur', section:'Le Songe', tag:'Le mystère (nuancée)',
+  {name:'Nyx', cat:'fondateur', section:'Le Songe', tag:'Le mystère (nuancée)', gender:'F',
    desc:`Refusait la hiérarchie voulue par Aurel — l'amour brisé d'Aurel. Disparue volontairement ; une présence se ressent encore dans le Refuge.`, faille:``, arc:``},
 
-  {name:'Henri', cat:'directeur', section:"L'Écho", tag:"Directeur de Léa",
+  {name:'Henri', cat:'directeur', section:"L'Écho", tag:"Directeur de Léa", gender:'H',
    desc:`Calme, attentif, perçoit les émotions. Loyal à Albert — des doutes naissants.`, faille:``, arc:``},
-  {name:'Pierre', cat:'directeur', section:"L'Ancrage", tag:'Directeur — et le traître effectif',
+  {name:'Pierre', cat:'directeur', section:"L'Ancrage", tag:'Directeur — et le traître effectif', gender:'H',
    desc:`Strict, traditionnel, rigide. Loyal sans réserve à Albert en façade — c'est en réalité lui qui livre. Finit apiculteur.`, faille:``, arc:``},
-  {name:'Aurore', cat:'directeur', section:"L'Envol → Le Songe", tag:"Directrice de Hugo et Julien",
+  {name:'Aurore', cat:'directeur', section:"L'Envol → Le Songe", tag:"Directrice de Hugo et Julien", gender:'F',
    desc:`Libre penseuse, curieuse, atypique. Doute d'Albert dès la première anomalie. Épouse d'Albert ; passe ensuite à la direction du Songe.`, faille:``, arc:``},
-  {name:'Delphine', cat:'directeur', section:"L'Ardeur", tag:'Directrice de Clara',
+  {name:'Delphine', cat:'directeur', section:"L'Ardeur", tag:'Directrice de Clara', gender:'F',
    desc:`Passionnée, exigeante, charismatique. Loyale à Albert par affection — jusqu'à prendre le parti du Trio.`, faille:``, arc:``},
-  {name:'Olivier', cat:'directeur', section:"L'Éveil", tag:"Directeur d'Elena, Alexia et Antoine",
+  {name:'Olivier', cat:'directeur', section:"L'Éveil", tag:"Directeur d'Elena, Alexia et Antoine", gender:'H',
    desc:`Bienveillant, protecteur, à l'écoute. Le doute le plus fort : il a la garde des trois anomalies. Succède à Albert à la tête de l'institution.`, faille:``, arc:``},
 ];
 
@@ -583,6 +586,7 @@ function renderChars(){
   const list = activeFilter === 'tous' ? characters : characters.filter(c => c.cat === activeFilter);
   grid.innerHTML = list.map(c => `
     <div class="char-card">
+      ${c.gender ? `<span class="gender-badge ${c.gender === 'H' ? 'h' : 'f'}">${c.gender === 'H' ? '♂' : '♀'}</span>` : ''}
       <span class="tag">${c.tag}</span>
       <h3>${c.name}</h3>
       <div class="section-name">${c.section}</div>
