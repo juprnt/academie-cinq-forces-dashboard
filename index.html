@@ -140,7 +140,10 @@ body.coulisses .coulisses-hidden-sections{display:block;}
 .filters button.active{background:var(--ink); color:var(--bg); border-color:var(--ink);}
 .chars-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:16px;}
 .char-card{background:var(--card); border:1px solid var(--card-line); border-radius:var(--radius); padding:18px; box-shadow:var(--shadow); position:relative;}
-.char-card .char-photo{width:64px; height:64px; border-radius:50%; object-fit:cover; float:right; margin:0 0 8px 10px; border:2px solid var(--card-line); box-shadow:var(--shadow);}
+.char-photo-wrap{float:right; margin:0 0 8px 10px; position:relative;}
+.char-card .char-photo{display:block; width:64px; height:64px; border-radius:50%; object-fit:cover; margin:0; border:2px solid var(--card-line); box-shadow:var(--shadow); cursor:pointer;}
+.char-photo-popup{position:absolute; top:0; right:0; width:200px; height:267px; object-fit:cover; border-radius:10px; border:2px solid var(--card-line); box-shadow:0 12px 32px rgba(0,0,0,.35); opacity:0; visibility:hidden; transform:scale(.96); transform-origin:top right; transition:opacity .15s ease, transform .15s ease; z-index:40; pointer-events:none; background:var(--card);}
+.char-photo-wrap:hover .char-photo-popup{opacity:1; visibility:visible; transform:scale(1);}
 .gender-badge{position:absolute; top:14px; right:14px; width:22px; height:22px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:.8rem; font-weight:700; color:#fff; box-shadow:0 1px 3px rgba(0,0,0,.25);}
 .gender-badge.h{background:#4A7C96;}
 .gender-badge.f{background:#B5698A;}
@@ -588,7 +591,7 @@ function renderChars(){
   const list = activeFilter === 'tous' ? characters : characters.filter(c => c.cat === activeFilter);
   grid.innerHTML = list.map(c => `
     <div class="char-card">
-      ${c.img ? `<img class="char-photo" src="${c.img}" alt="${c.name}" loading="lazy">` : ''}
+      ${c.img ? `<span class="char-photo-wrap"><img class="char-photo" src="${c.img}" alt="${c.name}" loading="lazy"><img class="char-photo-popup" src="${c.img}" alt="${c.name} — grand format" loading="lazy"></span>` : ''}
       ${c.gender ? `<span class="gender-badge ${c.gender === 'H' ? 'h' : 'f'}">${c.gender === 'H' ? '♂' : '♀'}</span>` : ''}
       <span class="tag">${c.tag}</span>
       <h3>${c.name}</h3>
