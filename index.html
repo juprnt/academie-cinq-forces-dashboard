@@ -12,7 +12,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="5 Forces">
-<meta name="description" content="Tableau de bord de la saga L'Académie des Cinq Forces — cozy fantasy YA, Prologue + 8 tomes + Épilogue.">
+<meta name="description" content="Tableau de bord de la saga L'Académie des Cinq Forces — cozy fantasy YA, Prologue + 5 tomes + Épilogue.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -198,6 +198,10 @@ body.coulisses .secret-name{display:block;}
 
 .coulisses-panel{display:none; margin-top:8px;}
 body.coulisses .coulisses-panel{display:block;}
+.public-only{display:inline-block;}
+body.coulisses .public-only{display:none;}
+.coulisses-only-inline{display:none;}
+body.coulisses .coulisses-only-inline{display:inline-block;}
 .coulisses-flag{background:var(--burgundy); color:#fff; font-size:.68rem; font-weight:700; padding:3px 9px; border-radius:999px; display:inline-block; margin-bottom:10px;}
 .timeline{list-style:none; margin:0; padding:0;}
 .timeline li{padding:10px 0 10px 20px; border-left:2px solid var(--card-line); position:relative; font-size:.86rem;}
@@ -251,12 +255,12 @@ footer{text-align:center; color:var(--ink-soft); font-size:.8rem; padding:30px 0
   <div class="hero">
     <img class="hero-logo" src="logo.png" alt="Emblème de L'Académie des Cinq Forces">
     <h1>L'Académie des Cinq Forces</h1>
-    <div class="tagline">Cozy fantasy · Prologue + 8 tomes + Épilogue</div>
+    <div class="tagline">Cozy fantasy · Prologue + <span class="public-only">5</span><span class="coulisses-only-inline">8</span> tomes + Épilogue</div>
     <p class="desc">Dans une académie de magie coupée du monde, cinq sections se répartissent les dons des élèves, chacune héritée d'un fondateur des origines. Trois élèves que personne n'a vraiment choisis vont découvrir ce que l'histoire officielle a caché depuis cinq siècles.</p>
   </div>
 
   <div class="stat-grid">
-    <div class="stat-card"><div class="num">10</div><div class="label">manuscrits rédigés &amp; relus (Prologue + 8 tomes + Épilogue)</div></div>
+    <div class="stat-card"><div class="num"><span class="public-only">7</span><span class="coulisses-only-inline">10</span></div><div class="label"><span class="public-only">manuscrits rédigés &amp; relus (Prologue + 5 tomes + Épilogue)</span><span class="coulisses-only-inline">manuscrits rédigés &amp; relus (Prologue + 8 tomes + Épilogue)</span></div></div>
     <div class="stat-card"><div class="num">5</div><div class="label">sections magiques, chacune avec ses valeurs, ses pouvoirs et son territoire</div></div>
     <div class="stat-card"><div class="num">69</div><div class="label">personnages recensés dans la bible de canon</div></div>
     <div class="stat-card"><div class="num">01.04.27</div><div class="label">lancement visé — Prologue + précommande Tome 1</div></div>
@@ -284,7 +288,7 @@ footer{text-align:center; color:var(--ink-soft); font-size:.8rem; padding:30px 0
     <div class="feature-card" data-goto="tomes">
       <div class="icon">📖</div>
       <h3>Tomes &amp; Progression</h3>
-      <p>Prologue, huit tomes, épilogue — couvertures, taglines et statut de réécriture.</p>
+      <p>Prologue, <span class="public-only">cinq</span><span class="coulisses-only-inline">huit</span> tomes, épilogue — couvertures, taglines et statut de réécriture.</p>
     </div>
     <div class="feature-card" data-goto="chronologie">
       <div class="icon">⏳</div>
@@ -315,7 +319,7 @@ footer{text-align:center; color:var(--ink-soft); font-size:.8rem; padding:30px 0
 
 <!-- ===================== TOMES ===================== -->
 <section class="view" id="view-tomes">
-  <h2>Prologue, huit tomes &amp; Épilogue</h2>
+  <h2>Prologue, <span class="public-only">cinq</span><span class="coulisses-only-inline">huit</span> tomes &amp; Épilogue</h2>
   <p class="section-intro">Chaque tome porte implicitement les valeurs d'une section, sur douze chapitres — environ un par mois de l'année scolaire.</p>
   <div class="tomes-track" id="tomesGrid"></div>
 </section>
